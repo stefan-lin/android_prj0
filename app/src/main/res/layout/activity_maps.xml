@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".MapsActivity">
+  <TextView
+    android:id="@+id/txtLong"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Long = "
+    android:textSize="32dp" />
+
+
+  <TextView
+    android:id="@+id/txtLat"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/txtLong"
+    android:text="Lat = "
+    android:textSize="32dp" />
+
+  <TextView
+    android:id="@+id/txtAlt"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/txtLat"
+    android:text="Alt = "
+    android:textSize="32dp" />
+
+</RelativeLayout>
+
+
+<!--
+<fragment android:id="@+id/map"
+          android:name="com.google.android.gms.maps.SupportMapFragment"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:map="http://schemas.android.com/apk/res-auto"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          tools:context="com.example.stefanlin.locationmap.MapsActivity"/>
+          -->
