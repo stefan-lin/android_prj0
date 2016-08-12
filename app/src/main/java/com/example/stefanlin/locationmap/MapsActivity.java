@@ -6,14 +6,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.util.Calendar;
 
 public class MapsActivity extends Activity {
   private TextView _txt_lng = null;
   private TextView _txt_lat = null;
   private TextView _txt_alt = null;
+  private TextView _txt_clk = null;
+  private TextView _txt_spd = null;
+  private TextView _txt_dis = null;  // total distance
+  private TextView _txt_dst = null;  // short distance
+  private Button   _se_bttn = null;
   private BroadcastReceiver _br = null;
+  private boolean  _onoff   = false;
+
+  private Handler  _handler = null;
+  private Runnable _clk_job = null;
 
 
   @Override
@@ -21,10 +37,48 @@ public class MapsActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_maps);
 
-    this._txt_lat = (TextView) findViewById(R.id.txtLong);
+    this._txt_lat = (TextView) findViewById(R.id.txtLng);
     this._txt_lng = (TextView) findViewById(R.id.txtLat);
     this._txt_alt = (TextView) findViewById(R.id.txtAlt);
+    this._txt_clk = (TextView) findViewById(R.id.txtClock);
+    this._txt_spd = (TextView) findViewById(R.id.txtSpeed);
+    this._txt_dis = (TextView) findViewById(R.id.txtTotalDis);
+    this._txt_dst = (TextView) findViewById(R.id.txtDis);
+    this._se_bttn = (Button)   findViewById(R.id.button0);
 
+    /* INIT CLOCK UPDATING THREAD */
+    this._handler = new Handler();
+    this._clk_job = new Runnable() {
+      @Override
+      public void run() {
+        Calendar c = Calendar.getInstance();
+        String t = (new StringBuilder()
+          .append(c.get(Calendar.HOUR_OF_DAY)).append(":")
+          .append(c.get(Calendar.MINUTE)).append(":")
+          .append(c.get(Calendar.SECOND)).append(" ")).toString();
+        _txt_clk.setText(t);
+
+        /* and here comes the "trick" */
+        _handler.postDelayed(this, 100);
+      }
+    };
+    _handler.postDelayed(_clk_job, 100); // start clock
+
+
+    this._se_bttn.setOnClickListener(new Button.OnClickListener(){
+      @Override
+      public void onClick(View v) {
+        if(!_onoff){ // start tracking
+          Intent intent = new Intent(MapsActivity.this, BackgroundService.class);
+          startService(intent);
+          _onoff = true;
+        }
+        else{ // stop tracking
+          stopService(new Intent(MapsActivity.this, BackgroundService.class));
+          _onoff = false;
+        }
+      }
+    });
   }
 
 
@@ -39,6 +93,9 @@ public class MapsActivity extends Activity {
         _txt_lat.setText("Lat = " + arr[0]);
         _txt_lng.setText("Lng = " + arr[1]);
         _txt_alt.setText("Alt = " + arr[2]);
+        _txt_spd.setText("Spd = " + arr[3]);
+        _txt_dis.setText("T.Dis = " + arr[4]);
+        _txt_dst.setText("Dis = " + arr[5]);
       }
     };
     IntentFilter intentFilter = new IntentFilter();
@@ -46,8 +103,8 @@ public class MapsActivity extends Activity {
     registerReceiver(this._br, intentFilter);
     Log.e("main", "starting service");
     //Start our own service
-    Intent intent = new Intent(MapsActivity.this, BackgroundService.class);
-    startService(intent);
+    //Intent intent = new Intent(MapsActivity.this, BackgroundService.class);
+    //startService(intent);
   }
 
   @Override

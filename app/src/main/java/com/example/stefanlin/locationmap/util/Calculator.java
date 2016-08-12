@@ -22,8 +22,7 @@ public class Calculator {
     return _EARTH_RADIUS_MILE * c;
   } // END METHOD get_distance
 
-  public static double get_speed(){
-
-    return 0.0;
+  public static double get_speed(double distance){
+    return distance / ( 2 / 3600.00 );
   }
 }

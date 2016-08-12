@@ -21,6 +21,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.util.ArrayList;
 
 /**
  * Created by stefanlin on 8/3/16.
@@ -31,6 +34,10 @@ public class App extends MultiDexApplication {
   private final String _ACCOUNT_FILE = "usr_account.json";
   private BroadcastReceiver _br = null;
   private Account           _usr_account = null;
+
+  private ArrayList<Double> _lats = new ArrayList<>();
+  private ArrayList<Double> _lngs = new ArrayList<>();
+  private double _total_dis = 0.0;
 
 
   @Override
@@ -116,10 +123,10 @@ public class App extends MultiDexApplication {
       Log.e(this._TAG, "usr_account.json does not exist");
       this._usr_account = new Account();
       Log.e(this._TAG, "new account");
-      this._usr_account.set_name("Tom", "Jones");
-      this._usr_account.add_record(new Record());
-      this._usr_account.add_record(new Record());
-      Log.e(this._TAG, this._usr_account.toString());
+      //this._usr_account.set_name("Tom", "Jones");
+      //this._usr_account.add_record(new Record());
+      //this._usr_account.add_record(new Record());
+      //Log.e(this._TAG, this._usr_account.toString());
       String account_str = (new Gson()).toJson(this._usr_account);
       this.write_internal_storage(this._ACCOUNT_FILE, account_str);
       //Log.e(this._TAG, account_str);
@@ -146,10 +153,25 @@ public class App extends MultiDexApplication {
       @Override
       public void onReceive(Context context, Intent intent) {
         if(intent != null){
-          String[] arr = intent.getStringArrayExtra("star");
-          for(String s: arr){
-            Log.e("[Application Class]", s);
-          } // END FOR LOOP
+          //String[] arr = intent.getStringArrayExtra("star");
+          //for(String s: arr){
+          //  Log.e("[Application Class]", s);
+          //} // END FOR LOOP
+          double[] dbls = intent.getDoubleArrayExtra("star");
+          double distance = _get_distance(dbls[0], dbls[1]);
+          BigDecimal bd = new BigDecimal(distance, MathContext.DECIMAL32);
+          double speed = Calculator.get_speed(distance);
+          _lats.add(dbls[0]);
+          _lngs.add(dbls[1]);
+          _total_dis += distance;
+          String arr[] = {
+            String.valueOf(dbls[0]),
+            String.valueOf(dbls[1]),
+            String.valueOf(dbls[2]),
+            String.valueOf(speed),
+            String.valueOf(_total_dis),
+            bd.toString()
+          };
           _send_data_to_ui(arr);
         }
         else{
@@ -168,4 +190,17 @@ public class App extends MultiDexApplication {
     intent.putExtra("str arr", strings);
     sendBroadcast(intent);
   } // END METHOD _send_data_to_ui
+
+  private double _get_distance(double lat, double lng){
+    if(!this._lats.isEmpty() && !this._lngs.isEmpty()){
+      double ret_dis = Calculator.get_distance(
+        this._lats.get(this._lats.size() -1),
+        this._lngs.get(this._lngs.size() - 1),
+        lat,
+        lng
+      );
+      return ret_dis;
+    }
+    return 0.0;
+  }
 }

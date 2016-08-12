@@ -3,29 +3,66 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context=".MapsActivity">
-  <TextView
-    android:id="@+id/txtLong"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Long = "
-    android:textSize="32dp" />
-
 
   <TextView
     android:id="@+id/txtLat"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/txtLong"
     android:text="Lat = "
+    android:textSize="32dp" />
+
+  <TextView
+    android:id="@+id/txtLng"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/txtLat"
+    android:text="Lng = "
     android:textSize="32dp" />
 
   <TextView
     android:id="@+id/txtAlt"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/txtLat"
+    android:layout_below="@id/txtLng"
     android:text="Alt = "
     android:textSize="32dp" />
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtClock"
+    android:textSize="32dp"
+    android:text="Time = "
+    android:layout_below="@id/txtAlt"/>
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtSpeed"
+    android:textSize="32dp"
+    android:text="Spd = "
+    android:layout_below="@id/txtClock"/>
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtDis"
+    android:textSize="32dp"
+    android:layout_below="@id/txtSpeed"
+    android:text="Dis = "/>
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/txtTotalDis"
+    android:textSize="32dp"
+    android:layout_below="@id/txtDis"
+    android:text="T.Dis = "/>
+
+  <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/button0"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:text="Start/End"
+    android:textSize="20dp"/>
 
 </RelativeLayout>
 

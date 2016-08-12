@@ -64,16 +64,18 @@ public class BackgroundService extends Service implements
 
   @Override
   public int onStartCommand(Intent intent, int flags, int startId) {
+    Log.e(_TAG, "Service is being starting");
     /* CHECK IF CURRENTLY ALREADY STARTED PROCESSING LOCATION */
     if (!this._processing_loc) {
       this._processing_loc = true;
       this._start_tracking();
     }
-    return START_NOT_STICKY;
+    return START_NOT_STICKY; //START_STICKY ??
   }
 
   @Override
   public void onDestroy() {
+    Log.e(_TAG, "Service is being destroied");
     super.onDestroy();
   }
 
@@ -81,8 +83,14 @@ public class BackgroundService extends Service implements
   public void onConnected(@Nullable Bundle bundle) {
     Log.d(_TAG, "onConnected");
 
+    Location loc = LocationServices.FusedLocationApi.getLastLocation(this._google_api_client);
+    String temp = String.valueOf(loc.getLatitude()) + " , " +
+                  String.valueOf(loc.getLongitude()) + " , " +
+                  String.valueOf(loc.getAltitude()) + " - " + String.valueOf(loc.getAccuracy());
+    Log.e(_TAG, temp);
+
     this._location_request = LocationRequest.create();
-    this._location_request.setInterval(2000); // update every two seconds
+    this._location_request.setInterval(5000); // update every five seconds
     this._location_request.setFastestInterval(1000); // the fastest rate in milliseconds at which your app can handle location updates
     this._location_request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
@@ -112,6 +120,10 @@ public class BackgroundService extends Service implements
 
   @Override
   public void onLocationChanged(Location location) {
+    double dlat = location.getLatitude();
+    double dlng = location.getLongitude();
+    double dalt = location.getAltitude();
+    double dacc = location.getAccuracy();
     if (location != null) {
       String lat = String.valueOf(location.getLatitude());
       String lng = String.valueOf(location.getLongitude());
@@ -124,10 +136,12 @@ public class BackgroundService extends Service implements
                        location.getAccuracy()
       );
 
-      String arr[] = {lat, lng, alt};
+      //String arr[] = {lat, lng, alt};
+      double dbls[] = {dlat, dlng, dalt, dacc};
       Intent intent = new Intent();
       intent.setAction("test");
-      intent.putExtra("star", arr);
+      //intent.putExtra("star", arr);
+      intent.putExtra("star", dbls);
       sendBroadcast(intent);
 
       /* ABORT IF THE ACCURACY IS TOO LOW */
