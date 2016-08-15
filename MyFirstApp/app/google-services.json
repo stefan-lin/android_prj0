@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1091378468385",
+    "project_id": "first-e65c1"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091378468385:android:059f56fac7a2dba1",
+        "android_client_info": {
+          "package_name": "com.example.bear.myfirstapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1091378468385-cekgobs2kcjmt2cg1vsn208vj8vsse50.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bear.myfirstapp",
+            "certificate_hash": "1FBFE8AFD0BE270B7A3817E5E3649095B06D2D46"
+          }
+        },
+        {
+          "client_id": "1091378468385-ogj54c26o6rfiimbh6sg2d9e1mja8vgb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-VcOzAKbg6gCPR9vSZYv3hgRRPV5iSZM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

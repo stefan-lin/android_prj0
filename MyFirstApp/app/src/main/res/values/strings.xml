@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Why it is always Hello world!!!\n
+                            Programmers only say hello to the keyboards!LOL</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+    <string name="button_signIn">Sign In</string>
+
+    <!-- Content Description for images -->
+    <string name="desc_a_icon">a Logo</string>
+
+    <!-- Button labels -->
+    <string name="sign_out">Sign Out</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="signed_in_fmt">Signed in as: %s</string>
+    <string name="signed_in">Signed in</string>
+    <string name="signing_in">Signing in…</string>
+    <string name="signed_out">Signed out</string>
+    <string name="signed_in_err">"Error: please check logs."</string>
+    <string name="error_null_person">
+        Error: Plus.PeopleApi.getCurrentPerson returned null. Ensure that the Google+ API is
+        enabled for your project, you have a properly configured google-services.json file
+        and that your device has an internet connection.
+    </string>
+    <string name="loading">Loading…</string>
+    <string name="auth_code_fmt">Auth Code: %s</string>
+    <string name="id_token_fmt">ID Token: %s</string>
+
+    <!-- Google Play Services error for Toast -->
+    <string name="play_services_error_fmt">Google Play Services Error: %i</string>
+
+    <!-- TODO(user): replace with your real server client ID -->
+    <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
+         from https://console.developers.google.com/ -->
+    <string name="server_client_id">1091378468385-ogj54c26o6rfiimbh6sg2d9e1mja8vgb.apps.googleusercontent.com</string>
+
+</resources>
